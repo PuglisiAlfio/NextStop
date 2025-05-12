@@ -8,7 +8,7 @@ import fuji from "./assets/fuji.jpg";
 import grandCanyon from "./assets/grand-canyon.jpg";
 import himalaya from "./assets/himalaya.jpg"
 import machuPicchu from "./assets/machu-picchu.jpg";
-import rioAmazzoni from "./assets/rio-amazzoni.jpg.jpg";
+import rioAmazzoni from "./assets/rio-amazzoni.jpg";
 import rovineGreche from "./assets/rovine-greche.jpg";
 import savana from "./assets/savana-africana.jpg";
 import statuaLiberta from "./assets/statua-libertà.png";
@@ -18,7 +18,7 @@ import templiGiapponesi from "./assets/templi-giapponesi.jpg"
 import tourEiffel from "./assets/tour-eiffel.png";
 import venezia from "./assets/venezia.jpg";
 
-export const AVAILABLE_PLACES = [
+export const LUOGHI_DISPONIBILI = [
     {
         id: 'p1',
         titolo: 'Aurora Boreale',
