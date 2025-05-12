@@ -1,4 +1,4 @@
-export default function Luoghi({ titolo, luoghi, testoAlternativo, }) {
+export default function Luoghi({ titolo, luoghi, testoAlternativo, onSelectLuogo}) {
   return (
     <section className="categoria-luoghi">
       <h2>{titolo}</h2>
@@ -9,7 +9,7 @@ export default function Luoghi({ titolo, luoghi, testoAlternativo, }) {
         <ul className="luoghi">
           {luoghi.map((luogo) => (
             <li key={luogo.id} className="luogo">
-               <button >
+               <button onClick={() => onSelectLuogo(luogo.id)}>
                 <img src={luogo.image.src} alt={luogo.image.alt} />
                 <h3>{luogo.titolo}</h3>
               </button>
