@@ -6,12 +6,20 @@ import "./App.css";
 function App() {
   return (
     <>
-      <h1>Next Stop</h1>
-      <Luoghi
-        titolo="Luoghi da visitare"
-        luoghi={LUOGHI_DISPONIBILI}
-        onSelectPlace={""}
-      />
+      <header>
+        <h1>Next Stop</h1>
+        <p>
+          Crea la tua collezione personale di luoghi che vorresti visitare o che
+          hai già visitato.
+        </p>
+      </header>
+      <main>
+        <Luoghi
+          titolo="Luoghi da visitare"
+          luoghi={LUOGHI_DISPONIBILI}
+          onSelectPlace={""}
+        />
+      </main>
     </>
   );
 }
