@@ -23,6 +23,20 @@ body {
   background: linear-gradient(180deg, #232c1c 0%, #232c1c 100%);
 }
 
+header h1 {
+  margin: 0;
+  font-size: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 1rem;
+}
+
+header p {
+  margin: 0 auto;
+  font-size: 1.15rem;
+  max-width: 38ch;
+  color: #9eb5b4;
+}
+
 .categoria-luoghi {
   max-width: 85rem;
   margin: 2rem auto;
