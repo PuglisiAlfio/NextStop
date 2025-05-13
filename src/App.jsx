@@ -1,14 +1,28 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Luoghi from "./components/Luoghi.jsx";
 import { LUOGHI_DISPONIBILI } from "./data";
 import Modal from "./components/Modal.jsx";
 import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
+import { ordinaLuoghiperDistanza } from "./loc.js";
 
 import "./App.css";
 
 function App() {
   const modal = useRef();
-  const [luoghiSelezionati, setLuoghiSelezionati] = useState([]);
+  const luoghiSelezionati = useRef();
+  const [luoghiDisponibili, setLuoghiDisponibili] = useState([]);
+  const [luoghiScelti, setLuoghiScelti] = useState([]);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((posizione) => {
+      const luoghiOrdinati = ordinaLuoghiperDistanza(
+        LUOGHI_DISPONIBILI,
+        posizione.coords.latitude,
+        posizione.coords.longitude
+      );
+      setLuoghiDisponibili(luoghiOrdinati);
+    });
+  }, []);
 
   function handleStartRemovePlace(id) {
     modal.current.open();
@@ -20,7 +34,7 @@ function App() {
   }
 
   function handleSelezionaLuogo(id) {
-    setLuoghiSelezionati((prevLuogoSelezionato) => {
+    setLuoghiScelti((prevLuogoSelezionato) => {
       if (prevLuogoSelezionato.some((luogo) => luogo.id === id)) {
         return prevLuogoSelezionato;
       }
@@ -30,7 +44,7 @@ function App() {
   }
 
   function handleRemovePlace() {
-    setLuoghiSelezionati((prevPickedPlaces) =>
+    setLuoghiScelti((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== luoghiSelezionati.current)
     );
     modal.current.close();
@@ -57,12 +71,13 @@ function App() {
           testoAlternativo={
             "Seleziona i luoghi che ti piacerebbe visitare o che hai già visitato."
           }
-          luoghi={luoghiSelezionati}
+          luoghi={luoghiScelti}
           onSelectLuogo={handleStartRemovePlace}
         />
         <Luoghi
           titolo="Luoghi da visitare"
-          luoghi={LUOGHI_DISPONIBILI}
+          testoAlternativo={"Sto ordinando i luoghi per distanza..."}
+          luoghi={luoghiDisponibili}
           onSelectLuogo={handleSelezionaLuogo}
         />
       </main>
