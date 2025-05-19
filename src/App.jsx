@@ -7,12 +7,20 @@ import { ordinaLuoghiperDistanza } from "./loc.js";
 
 import "./App.css";
 
+//Lo mettiamo fuori dal componente perché non è necessario che venga rieseguito ogni volta che il componente viene smontato e rimontato, ma ci serve soltanto alla ricarica della pagina
+const idMemorizzati =
+  JSON.parse(localStorage.getItem("luoghiSelezionati")) || [];
+const luoghiMemorizzati = idMemorizzati.map((id) =>
+  LUOGHI_DISPONIBILI.find((place) => place.id === id)
+);
+
 function App() {
   const modal = useRef();
   const luoghiSelezionati = useRef();
   const [luoghiDisponibili, setLuoghiDisponibili] = useState([]);
-  const [luoghiScelti, setLuoghiScelti] = useState([]);
+  const [luoghiScelti, setLuoghiScelti] = useState(luoghiMemorizzati);
 
+  // ordinare i luoghi disponibili dal più vicino al più lontano dalla tua posizione
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((posizione) => {
       const luoghiOrdinati = ordinaLuoghiperDistanza(
@@ -44,7 +52,7 @@ function App() {
     const idMemorizzati =
       JSON.parse(localStorage.getItem("luoghiSelezionati")) || [];
     //ci assicuriamo di non memorizzare un id già esistente nel localStorage
-    if (idMemorizzati.indexOf(id) === 1) {
+    if (!idMemorizzati.includes(id)) {
       localStorage.setItem(
         "luoghiSelezionati",
         JSON.stringify([id, ...idMemorizzati])
