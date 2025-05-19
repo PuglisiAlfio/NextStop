@@ -57,6 +57,15 @@ function App() {
       prevPickedPlaces.filter((place) => place.id !== luoghiSelezionati.current)
     );
     modal.current.close();
+
+    const idMemorizzati =
+      JSON.parse(localStorage.getItem("luoghiSelezionati")) || [];
+    localStorage.setItem(
+      "luoghiSelezionati",
+      JSON.stringify(
+        idMemorizzati.filter((id) => id !== luoghiSelezionati.current)
+      )
+    );
   }
 
   return (
