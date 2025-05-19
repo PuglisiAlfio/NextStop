@@ -41,6 +41,15 @@ function App() {
       const luogo = LUOGHI_DISPONIBILI.find((luogo) => luogo.id === id);
       return [luogo, ...prevLuogoSelezionato];
     });
+    const idMemorizzati =
+      JSON.parse(localStorage.getItem("luoghiSelezionati")) || [];
+    //ci assicuriamo di non memorizzare un id già esistente nel localStorage
+    if (idMemorizzati.indexOf(id) === 1) {
+      localStorage.setItem(
+        "luoghiSelezionati",
+        JSON.stringify([id, ...idMemorizzati])
+      );
+    }
   }
 
   function handleRemovePlace() {
