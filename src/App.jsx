@@ -15,8 +15,8 @@ const luoghiMemorizzati = idMemorizzati.map((id) =>
 );
 
 function App() {
-  const modal = useRef();
   const luoghiSelezionati = useRef();
+  const [modalAperto, setModalAperto] = useState(false);
   const [luoghiDisponibili, setLuoghiDisponibili] = useState([]);
   const [luoghiScelti, setLuoghiScelti] = useState(luoghiMemorizzati);
 
@@ -33,12 +33,12 @@ function App() {
   }, []);
 
   function handleStartRemovePlace(id) {
-    modal.current.open();
+    setModalAperto(true);
     luoghiSelezionati.current = id;
   }
 
   function handleStopRemovePlace() {
-    modal.current.close();
+    setModalAperto(false);
   }
 
   function handleSelezionaLuogo(id) {
@@ -64,7 +64,7 @@ function App() {
     setLuoghiScelti((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== luoghiSelezionati.current)
     );
-    modal.current.close();
+    setModalAperto(false);
 
     const idMemorizzati =
       JSON.parse(localStorage.getItem("luoghiSelezionati")) || [];
@@ -78,7 +78,7 @@ function App() {
 
   return (
     <>
-      <Modal ref={modal}>
+      <Modal open={modalAperto}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
