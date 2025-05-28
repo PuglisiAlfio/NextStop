@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Luoghi from "./components/Luoghi.jsx";
 import { LUOGHI_DISPONIBILI } from "./data";
 import Modal from "./components/Modal.jsx";
@@ -60,21 +60,28 @@ function App() {
     }
   }
 
-  function handleRemovePlace() {
+  // useCallback memorizza la funzione handleRemovePlace, per evitare che venga ricreata ad ogni render
+  // L'array di dipendenze è vuoto [], quindi questa funzione rimarrà stabile
+  const handleRemovePlace = useCallback(function handleRemovePlace() {
+    // Rimuove il luogo selezionato dall'array di luoghi scelti (stato React)
     setLuoghiScelti((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== luoghiSelezionati.current)
     );
+    // Chiude il modal
     setModalAperto(false);
 
+    // Recupera l'elenco di ID memorizzati nel localStorage
     const idMemorizzati =
       JSON.parse(localStorage.getItem("luoghiSelezionati")) || [];
+
+    // Aggiorna il localStorage rimuovendo l'ID del luogo selezionato
     localStorage.setItem(
       "luoghiSelezionati",
       JSON.stringify(
         idMemorizzati.filter((id) => id !== luoghiSelezionati.current)
       )
     );
-  }
+  }, []);
 
   return (
     <>

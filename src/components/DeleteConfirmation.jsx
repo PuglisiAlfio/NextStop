@@ -10,7 +10,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
     return () => {
       clearTimeout(timer);
     };
-  }, [onConfirm]);
+  }, [onConfirm]); // Dipendenza: rigenera l'effetto se cambia onConfirm (quando si passano funzioni come dipendenze c'è il rischio di creare loop infiniti, non è questo il caso ma useremo comunque useCallback per memorizzare la funzione nel componente App per evitare qualsiasi problema)
 
   return (
     <div id="delete-confirmation">
