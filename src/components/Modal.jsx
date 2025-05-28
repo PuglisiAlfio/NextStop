@@ -26,7 +26,7 @@ function Modal({ open, children, onClose }) {
     // Mostriamo il dialog come un portal React nel nodo con id="modal"
     // Il listener onClose intercetta chiusure manuali (es. ESC) e sincronizza lo stato esterno
     <dialog className="modal" ref={dialog} onClose={onClose}>
-      {children}
+      {open ? children : null}
     </dialog>,
     document.getElementById("modal")
   );
