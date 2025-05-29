@@ -192,6 +192,21 @@ header p {
   animation: slide-down-fade-in 0.3s ease-out forwards;
 }
 
+progress[value] {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 5px;
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: #5d0909;
+  border-radius: 5px;
+}
+
 @keyframes slide-down-fade-in {
   from {
     opacity: 0;

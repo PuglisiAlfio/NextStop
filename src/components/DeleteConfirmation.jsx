@@ -1,11 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+const TIMER = 3000;
 
 export default function DeleteConfirmation({ onConfirm, onCancel }) {
+  const [tempoRimanente, setTempoRimanente] = useState(TIMER);
+
+  useEffect(() => {
+    // Avvia un intervallo che aggiorna il tempo rimanente ogni 10 ms
+    const interval = setInterval(() => {
+      setTempoRimanente((prevTempo) => prevTempo - 10);
+    }, 10);
+
+    // Pulisce l'intervallo quando il componente viene smontato o aggiornato
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   useEffect(() => {
     // Imposta un timer per confermare automaticamente l'eliminazione dopo 3 secondi
     const timer = setTimeout(() => {
       onConfirm();
-    }, 3000);
+    }, TIMER);
     // Stoppa il timer per annullare l'eliminazione dopo 3 secondi
     return () => {
       clearTimeout(timer);
@@ -24,6 +40,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
           Si
         </button>
       </div>
+      <progress value={tempoRimanente} max={TIMER} />
     </div>
   );
 }
